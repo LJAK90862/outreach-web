@@ -86,6 +86,16 @@
     .filter-bar {
       display: flex; gap: 2px; padding: 10px 32px;
       border-bottom: 1px solid var(--border); background: var(--bg);
+      flex-wrap: wrap;
+    }
+
+    .filter-divider {
+      width: 1px; background: var(--border); margin: 0 8px; align-self: stretch;
+    }
+
+    .category-label {
+      font-size: 10px; color: var(--text-dim); text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 6px 8px; align-self: center;
     }
 
     .filter-tab {
@@ -358,6 +368,7 @@
   let activeId = null;
   let activeTone = 'casual';
   let activeFilter = 'all';
+  let activeCategory = 'all';
   let gmailReady = false;
   let tokenClient = null;
   let accessToken = null;
@@ -369,33 +380,83 @@
   function getStatus(p) { return p._status || 'new'; }
   function setStatus(p, s) { p._status = s; saveProspects(); }
 
+  // Category assignment based on prospect id ranges and data
+  function getCategory(p) {
+    if (p._category) return p._category;
+    // Auto-assign based on known data
+    const c = (p.company || '').toLowerCase();
+    const h = (p.personalization_hooks || '').toLowerCase();
+    if (c.includes('lovable') || c.includes('bolt') || c.includes('replit') || c.includes('plinq') ||
+        c.includes('anything') || c.includes('mocha') || c.includes('shipper') || c.includes('makerkit') ||
+        h.includes('vibe') || h.includes('lovable') || h.includes('non-technical')) return 'vibe-coders';
+    if (c.includes('claude') || h.includes('building with claude')) return 'claude-builders';
+    if (h.includes('community') || h.includes('podcast') || h.includes('content creator') ||
+        c.includes('saas club') || c.includes('microconf') || c.includes('tinyseed') ||
+        c.includes('startupsauce') || c.includes('practical founders')) return 'community';
+    return 'saas-founders';
+  }
+
   // ── Filters ────────────────────────────────
-  const filters = [
+  const statusFilters = [
     { key: 'all', label: 'All' },
     { key: 'new', label: 'New Leads' },
-    { key: 'sent', label: 'Email Sent' },
+    { key: 'sent', label: 'Sent' },
     { key: 'responded', label: 'Responded' },
-    { key: 'no_response', label: 'Not Responded' },
+    { key: 'no_response', label: 'No Reply' },
     { key: 'dismissed', label: 'Dismissed' },
   ];
 
+  const categoryFilters = [
+    { key: 'all', label: 'All Lists' },
+    { key: 'saas-founders', label: 'SaaS Founders' },
+    { key: 'vibe-coders', label: 'Vibe Coders' },
+    { key: 'claude-builders', label: 'Claude Builders' },
+    { key: 'community', label: 'Community Leaders' },
+  ];
+
   function getFiltered() {
-    if (activeFilter === 'all') return prospects.filter(p => getStatus(p) !== 'dismissed');
-    return prospects.filter(p => getStatus(p) === activeFilter);
+    return prospects.filter(p => {
+      const status = getStatus(p);
+      const cat = getCategory(p);
+      const statusMatch = activeFilter === 'all' ? status !== 'dismissed' : status === activeFilter;
+      const catMatch = activeCategory === 'all' || cat === activeCategory;
+      return statusMatch && catMatch;
+    });
   }
 
   function renderFilters() {
-    const counts = {};
-    filters.forEach(f => counts[f.key] = 0);
-    prospects.forEach(p => { const s = getStatus(p); if (counts[s] !== undefined) counts[s]++; });
-    counts.all = prospects.filter(p => getStatus(p) !== 'dismissed').length;
+    // Status counts
+    const sCounts = {};
+    statusFilters.forEach(f => sCounts[f.key] = 0);
+    const catFiltered = activeCategory === 'all' ? prospects : prospects.filter(p => getCategory(p) === activeCategory);
+    catFiltered.forEach(p => { const s = getStatus(p); if (sCounts[s] !== undefined) sCounts[s]++; });
+    sCounts.all = catFiltered.filter(p => getStatus(p) !== 'dismissed').length;
 
-    document.getElementById('filterBar').innerHTML = filters.map(f => `
-      <button class="filter-tab ${activeFilter === f.key ? 'active' : ''}" onclick="setFilter('${f.key}')">
-        ${f.label}<span class="filter-count">${counts[f.key]}</span>
-      </button>
-    `).join('');
+    // Category counts
+    const cCounts = { all: prospects.filter(p => getStatus(p) !== 'dismissed').length };
+    categoryFilters.forEach(f => { if (f.key !== 'all') cCounts[f.key] = 0; });
+    prospects.filter(p => getStatus(p) !== 'dismissed').forEach(p => {
+      const cat = getCategory(p);
+      if (cCounts[cat] !== undefined) cCounts[cat]++;
+    });
+
+    document.getElementById('filterBar').innerHTML =
+      `<span class="category-label">List:</span>` +
+      categoryFilters.filter(f => f.key === 'all' || (cCounts[f.key] || 0) > 0).map(f => `
+        <button class="filter-tab ${activeCategory === f.key ? 'active' : ''}" onclick="setCategory('${f.key}')">
+          ${f.label}<span class="filter-count">${cCounts[f.key] || 0}</span>
+        </button>
+      `).join('') +
+      `<div class="filter-divider"></div>` +
+      `<span class="category-label">Status:</span>` +
+      statusFilters.map(f => `
+        <button class="filter-tab ${activeFilter === f.key ? 'active' : ''}" onclick="setFilter('${f.key}')">
+          ${f.label}<span class="filter-count">${sCounts[f.key]}</span>
+        </button>
+      `).join('');
   }
+
+  function setCategory(c) { activeCategory = c; renderFilters(); renderList(); }
 
   function setFilter(f) {
     activeFilter = f;

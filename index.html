@@ -297,6 +297,7 @@
       <span>Gmail not connected</span>
     </div>
     <button class="btn" onclick="connectGmail()" id="gmailBtn">Connect Gmail</button>
+    <button class="btn" onclick="syncProspects()">Sync New Leads</button>
     <button class="btn" onclick="openAddModal()">+ Add Prospect</button>
   </div>
 </header>
@@ -436,16 +437,51 @@
     const stored = localStorage.getItem('prospects');
     if (stored) {
       prospects = JSON.parse(stored);
-    } else {
-      try {
-        const resp = await fetch('prospects.json');
-        prospects = await resp.json();
-        saveProspects();
-      } catch (e) { prospects = []; }
+    }
+    // Always merge in new prospects from the JSON file
+    try {
+      const resp = await fetch('prospects.json?v=' + Date.now());
+      const remote = await resp.json();
+      const existingUrls = new Set(prospects.map(p => (p.linkedin_url || '').toLowerCase().replace(/\/+$/, '')));
+      let added = 0;
+      for (const rp of remote) {
+        const url = (rp.linkedin_url || '').toLowerCase().replace(/\/+$/, '');
+        if (url && !existingUrls.has(url)) {
+          prospects.push(rp);
+          existingUrls.add(url);
+          added++;
+        }
+      }
+      if (added > 0 || !stored) saveProspects();
+      if (added > 0) toast(`Synced ${added} new prospect(s)`, 'success');
+    } catch (e) {
+      if (!stored) prospects = [];
     }
     renderFilters();
     renderList();
     updateStats();
+  }
+
+  async function syncProspects() {
+    try {
+      const resp = await fetch('prospects.json?v=' + Date.now());
+      const remote = await resp.json();
+      const existingUrls = new Set(prospects.map(p => (p.linkedin_url || '').toLowerCase().replace(/\/+$/, '')));
+      let added = 0;
+      for (const rp of remote) {
+        const url = (rp.linkedin_url || '').toLowerCase().replace(/\/+$/, '');
+        if (url && !existingUrls.has(url)) {
+          prospects.push(rp);
+          existingUrls.add(url);
+          added++;
+        }
+      }
+      saveProspects();
+      renderFilters(); renderList(); updateStats();
+      toast(added > 0 ? `Synced ${added} new prospect(s)` : 'Already up to date', added > 0 ? 'success' : 'info');
+    } catch (e) {
+      toast('Sync failed: ' + e.message, 'error');
+    }
   }
 
   function saveProspects() { localStorage.setItem('prospects', JSON.stringify(prospects)); }

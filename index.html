@@ -702,9 +702,9 @@
 
   // Short LinkedIn connect note templates (under 300 chars)
   const connectTemplates = [
-    (p) => `Hey ${p._first}, love what you're building with ${p.company}. I'm looking for some early stage feedback on an app I'm working on \u2014 happy to do a review swap if you're up for it!`,
-    (p) => `Hi ${p._first}! Really like what you're doing at ${p.company}. I'm looking for early stage feedback on something I'm building \u2014 happy for a review swap if you're interested?`,
-    (p) => `Hey ${p._first} \u2014 came across ${p.company}, looks great. Looking for some early stage feedback on an app and happy to do a review swap. Would love to connect!`,
+    (p) => `Hey ${p._first}, love what you're building with ${p.company}. I'm looking for some early stage feedback on an app we are working on, Globalize.now. Happy to discuss anything sales related in return!`,
+    (p) => `Hi ${p._first}! Really like what you're doing at ${p.company}. I'm looking for some early stage feedback on an app we're building, Globalize.now. Happy to discuss anything sales related in return!`,
+    (p) => `Hey ${p._first}, came across ${p.company}, looks great. I'm looking for some early stage feedback on Globalize.now, an app we are working on. Happy to discuss anything sales related in return!`,
   ];
 
   function generateConnectNote(prospect) {
@@ -717,6 +717,11 @@
     if (!p || !p.linkedin_url) return;
     const note = generateConnectNote(p);
     navigator.clipboard.writeText(note);
+    // Mark as sent
+    p._sent = true;
+    p._sentDate = new Date().toISOString();
+    setStatus(p, 'sent');
+    renderFilters(); renderList(); renderDetail(); updateStats();
     toast('Connect note copied! Paste it in the "Add a note" field on LinkedIn.', 'success');
     window.open(p.linkedin_url, '_blank');
   }

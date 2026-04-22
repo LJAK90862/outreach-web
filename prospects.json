@@ -1268,5 +1268,143 @@
     "personalization_hooks": "MakerKit users build SaaS fast but need localization added. Integration opportunity.",
     "growth_signals": "Popular SaaS boilerplate, writing about vibe coding tools",
     "id": 111
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/indragie/",
+    "name": "Indragie Karunaratne",
+    "headline": "Engineer - Shipped macOS app built entirely by Claude Code",
+    "company": "Context (macOS app)",
+    "product_description": "Shipped Context, a native macOS app for debugging MCP servers - 95% built by Claude Code, 20K lines",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Shipped a full macOS app with Claude Code. 20K lines, less than 1K written by hand. Building since 2008.",
+    "growth_signals": "Featured on Techmeme, 9to5Mac, Hacker News front page",
+    "id": 112
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/aleksander-mekhanik-41547b272/",
+    "name": "Aleksander Mekhanik",
+    "headline": "Co-Founder at Vulcan Technologies (YC)",
+    "company": "Vulcan Technologies",
+    "product_description": "AI for government law and regulation - built with Claude Code. 11M seed in 4 months.",
+    "stage": "seed",
+    "funding": "11M seed led by General Catalyst",
+    "_category": "claude-builders",
+    "personalization_hooks": "Non-technical founder who built entire company with Claude Code. YC backed. Dartmouth dropout chess champion.",
+    "growth_signals": "11M seed in 4 months, state and federal government contracts",
+    "id": 113
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/markrhinkle/",
+    "name": "Mark Hinkle",
+    "headline": "Founder at Peripety Labs - 25yr software vet building with Claude Code",
+    "company": "Peripety Labs",
+    "product_description": "AI enterprise content - 250K+ newsletter subscribers. Building MCP servers and tools with Claude Code.",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "25 years in software, wrote more code in 2 weeks with Claude than all of them combined. 250K subscribers.",
+    "growth_signals": "250K newsletter subscribers, prolific Claude Code content on LinkedIn",
+    "id": 114
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/emilykramer/",
+    "name": "Emily Kramer",
+    "headline": "Founder at MKT1 - Building marketing tools with Claude Code",
+    "company": "MKT1",
+    "product_description": "B2B marketing newsletter and advisory. Built Claude MCP server for marketers. Former VP Marketing at Asana.",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Former Asana VP Marketing. Built MKT1 Gen Marketer MCP for Claude. Her audience builds tools with AI.",
+    "growth_signals": "Major newsletter, Claude partnership content, MCP server launch",
+    "id": 115
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/limzhiyang/",
+    "name": "Zhi Yang Lim",
+    "headline": "Designer building with Claude Code",
+    "company": "Designer / Claude Builder",
+    "product_description": "Designer who shipped a working PWA with Claude Code - first attempt at coding, published Medium case study",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Designer who vibe-coded a real app with Claude. Non-technical builder = perfect globalize.now user.",
+    "id": 116
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/cpinto/",
+    "name": "Carlos Pinto",
+    "headline": "Building complete SaaS with only Claude Code",
+    "company": "SaaS Builder with Claude Code",
+    "product_description": "Documented building a complete SaaS product using only Claude Code on HEY World blog",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Published detailed blog on building SaaS with only Claude Code. Active builder.",
+    "id": 117
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/tom-veysey/",
+    "name": "Tom Veysey",
+    "headline": "Builder - Created Claude skill for LinkedIn posts",
+    "company": "Claude Skill Builder",
+    "product_description": "Built a Claude skill to automate LinkedIn content creation",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Building Claude skills for content. Active on LinkedIn sharing Claude builds.",
+    "id": 118
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/kieranklaassen/",
+    "name": "Kieran Klaassen",
+    "headline": "GM at Cora - Shipping faster than ever with Claude Code",
+    "company": "Cora (email management)",
+    "product_description": "Email management tool. Hasn't typed a function in weeks, shipping faster than ever with Claude Code.",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Redefining programming with Claude Code. Ships without typing functions. Great case study.",
+    "id": 119
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/vladlarichev/",
+    "name": "Vlad Larichev",
+    "headline": "Using Claude Code for industrial CAD / ArchiLabs",
+    "company": "ArchiLabs",
+    "product_description": "Building web-based CAD tool for data center design using Claude Code",
+    "stage": "seed",
+    "_category": "claude-builders",
+    "personalization_hooks": "Using Claude Code for industrial domains (CAD). 53 comments on LinkedIn post about it.",
+    "growth_signals": "Viral LinkedIn post about Claude Code for CAD/industrial use",
+    "id": 120
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/smaxor/",
+    "name": "Jason Akatiff",
+    "headline": "Founder at Built With AI",
+    "company": "Built With AI",
+    "product_description": "Building products and tools powered by AI including Claude",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Runs 'Built With AI' brand. Active builder using Claude.",
+    "id": 121
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/stephanmiller/",
+    "name": "Stephan Miller",
+    "headline": "Developer building Electron apps with Claude Code",
+    "company": "Dev / Claude Builder",
+    "product_description": "Published guide on building Electron apps from scratch with Claude Code",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Documented building desktop apps with Claude Code. Active content creator.",
+    "id": 122
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/gencay/",
+    "name": "Gencay",
+    "headline": "Creator of LearnAIWithMe - Claude Code content",
+    "company": "LearnAIWithMe",
+    "product_description": "Newsletter/content about building with Claude Code - 'Build. Ship. Repeat.' guide",
+    "stage": "bootstrapped",
+    "_category": "claude-builders",
+    "personalization_hooks": "Writes 'Build Ship Repeat' content about Claude Code. His audience = our audience.",
+    "id": 123
   }
 ]

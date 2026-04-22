@@ -1165,5 +1165,108 @@
     "stage": "seed",
     "personalization_hooks": "Exited Teachable for $250M. Serial founder with incredible product instincts.",
     "id": 102
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/antonosika/",
+    "name": "Anton Osika",
+    "headline": "CEO & Co-Founder at Lovable",
+    "company": "Lovable",
+    "product_description": "AI app builder - vibe code apps and websites with AI. 400M ARR, 6.6B valuation.",
+    "stage": "series-b",
+    "funding": "330M Series B at 6.6B valuation",
+    "personalization_hooks": "His users are our users. Lovable builders need localization. Partnership angle.",
+    "growth_signals": "400M ARR, 8M users, 200K new projects daily",
+    "id": 103
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/sabrineamatos/",
+    "name": "Sabrine Matos",
+    "headline": "Founder at Plinq - Built with Lovable",
+    "company": "Plinq",
+    "product_description": "Women's safety app with criminal record checks - built entirely with Lovable in 45 days",
+    "stage": "pre-seed",
+    "funding": "456K ARR, raising 500K seed",
+    "personalization_hooks": "Non-technical founder who vibe-coded a 456K ARR app. Brazil-based = needs localization. Perfect case study.",
+    "growth_signals": "10K+ users in 3 months, 456K ARR, Lovable showcase feature",
+    "id": 104
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/nickhollins/",
+    "name": "Eric Simons",
+    "headline": "CEO at StackBlitz / Bolt.new",
+    "company": "Bolt.new / StackBlitz",
+    "product_description": "AI-powered full-stack app builder in the browser. 40M ARR in 5 months.",
+    "stage": "series-a",
+    "funding": "105.5M raised",
+    "personalization_hooks": "His Bolt users ship apps globally but have no localization. Partnership angle.",
+    "growth_signals": "40M ARR in 5 months, Anthropic partner",
+    "id": 105
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/amjadmasad/",
+    "name": "Amjad Masad",
+    "headline": "CEO & Co-Founder at Replit",
+    "company": "Replit",
+    "product_description": "AI coding platform - build and deploy apps from natural language. 50M+ users.",
+    "stage": "series-c",
+    "funding": "400M at 9B valuation",
+    "personalization_hooks": "Replit users deploy globally but rarely localize. Integration/partnership opportunity.",
+    "growth_signals": "50M+ users, 240M revenue in 2025, 9B valuation",
+    "id": 106
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/petergyang/",
+    "name": "Peter Yang",
+    "headline": "Product Leader & Creator",
+    "company": "Creator / Product Leader",
+    "product_description": "Popular product and tech creator writing about vibe coding and turning prototypes into real SaaS",
+    "stage": "bootstrapped",
+    "personalization_hooks": "Writes about converting vibe coded prototypes into real SaaS. His audience = our audience.",
+    "growth_signals": "Large LinkedIn following, content about vibe coding to SaaS pipeline",
+    "id": 107
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/jonathanmei/",
+    "name": "Jonathan Mei",
+    "headline": "Founder at Anything",
+    "company": "Anything",
+    "product_description": "Vibe coding startup that hit 2M ARR in first two weeks, 100M valuation",
+    "stage": "seed",
+    "funding": "100M valuation",
+    "personalization_hooks": "Fastest-growing vibe coding startup. His users build apps that need localization.",
+    "growth_signals": "2M ARR in 2 weeks, 100M valuation (TechCrunch)",
+    "id": 108
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/getmocha/",
+    "name": "Mocha Founder",
+    "headline": "Founder at Mocha AI App Builder",
+    "company": "Mocha",
+    "product_description": "AI app builder with built-in database, hosting, and auth - zero config for non-technical founders",
+    "stage": "seed",
+    "personalization_hooks": "Building for non-technical founders. Their users need easy localization.",
+    "id": 109
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/shippernow/",
+    "name": "Shipper Founder",
+    "headline": "Founder at Shipper.now",
+    "company": "Shipper.now",
+    "product_description": "Prompt to full SaaS - no-code, beginner-friendly vibe coding tool",
+    "stage": "bootstrapped",
+    "personalization_hooks": "SaaS builder for non-coders. Their users ship fast but skip localization.",
+    "id": 110
+  },
+  {
+    "linkedin_url": "https://www.linkedin.com/in/nicogee/",
+    "name": "Nico Gesualdo",
+    "headline": "Founder at MakerKit",
+    "company": "MakerKit",
+    "product_description": "SaaS starter kits for Next.js and Remix - auth, billing, teams out of the box",
+    "stage": "bootstrapped",
+    "website": "https://makerkit.dev",
+    "personalization_hooks": "MakerKit users build SaaS fast but need localization added. Integration opportunity.",
+    "growth_signals": "Popular SaaS boilerplate, writing about vibe coding tools",
+    "id": 111
   }
 ]

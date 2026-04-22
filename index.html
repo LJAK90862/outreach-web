@@ -300,6 +300,7 @@
     </div>
     <button class="btn" onclick="connectGmail()" id="gmailBtn">Connect Gmail</button>
     <button class="btn" onclick="syncProspects()">Sync New Leads</button>
+    <button class="btn btn-danger" onclick="resetData()">Reset Data</button>
     <button class="btn" onclick="openAddModal()">+ Add Prospect</button>
   </div>
 </header>
@@ -414,8 +415,9 @@
       (p) => `Hi ${p.name}, as a fellow SaaS founder, I know how valuable honest product feedback is \u2014 especially from people who understand the journey. I'm Liam, building globalize.now (AI localization for dev teams). I'd love to propose a review swap: I'll invest time in thoroughly reviewing ${p.company} and sharing actionable feedback, and I'd appreciate your perspective on our product in return. ${p._hook}`,
     ],
     short: [
-      (p) => `Hey ${p._first}! Fellow founder here (globalize.now \u2014 AI localization for devs). Would you be up for a product review swap? I'll review ${p.company} first. ${p._hook}`,
-      (p) => `Hi ${p._first}, Liam here \u2014 building globalize.now. Doing review swaps with other SaaS founders this month. Happy to review ${p.company} first if you're interested? ${p._hook}`,
+      (p) => `Hey ${p._first}, love what you're building with ${p.company}. I'm looking for some early stage feedback on an app we are working on, Globalize.now. Happy to discuss anything sales related in return!`,
+      (p) => `Hi ${p._first}! Really like what you're doing at ${p.company}. I'm looking for some early stage feedback on an app we're building, Globalize.now. Happy to discuss anything sales related in return!`,
+      (p) => `Hey ${p._first}, came across ${p.company}, looks great. I'm looking for some early stage feedback on Globalize.now, an app we are working on. Happy to discuss anything sales related in return!`,
     ],
   };
 
@@ -487,6 +489,12 @@
   }
 
   function saveProspects() { localStorage.setItem('prospects', JSON.stringify(prospects)); }
+
+  function resetData() {
+    if (!confirm('This will clear all local data (statuses, drafts, emails) and reload fresh from the server. Continue?')) return;
+    localStorage.clear();
+    location.reload();
+  }
 
   // ── Render prospect list ───────────────────
   function renderList() {
@@ -582,11 +590,27 @@
       ${status !== 'dismissed' ? `
       <div class="message-section">
         <h3>Outreach Message</h3>
-        <div class="tone-tabs">
-          ${['casual', 'formal', 'short'].map(t => `
-            <button class="tone-tab ${activeTone === t ? 'active' : ''}" onclick="switchTone('${t}')">${t}</button>
-          `).join('')}
-          <button class="btn btn-sm" onclick="regenerate()" style="margin-left:auto">Regenerate</button>
+        ${p.linkedin_url ? `
+        <div style="margin-bottom:18px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <h3 style="font-size:14px;font-weight:600;margin:0">LinkedIn Connect Note</h3>
+            <button class="btn btn-sm btn-linkedin" onclick="openLinkedIn()">Open LinkedIn + Copy</button>
+          </div>
+          <div class="message-box" style="margin-bottom:0">
+            <div style="font-size:13px;line-height:1.6;color:var(--text)">${esc(generateConnectNote(p))}</div>
+          </div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:6px">${generateConnectNote(p).length} / 300 chars</div>
+        </div>
+        ` : ''}
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <h3 style="font-size:14px;font-weight:600;margin:0">Email Message</h3>
+          <div class="tone-tabs" style="margin:0">
+            ${['casual', 'formal', 'short'].map(t => `
+              <button class="tone-tab ${activeTone === t ? 'active' : ''}" onclick="switchTone('${t}')">${t}</button>
+            `).join('')}
+            <button class="btn btn-sm" onclick="regenerate()">Regenerate</button>
+          </div>
         </div>
         <div class="email-row">
           <label>To:</label>
@@ -599,7 +623,6 @@
           <span class="char-count" id="charCount"></span>
           <div class="message-actions">
             <button class="btn btn-sm" onclick="copyMessage()">Copy</button>
-            ${p.linkedin_url ? `<button class="btn btn-sm btn-linkedin" onclick="openLinkedIn()">LinkedIn Connect + Copy</button>` : ''}
             <button class="btn btn-sm btn-send" onclick="sendOne()" id="sendBtn">${status === 'sent' ? 'Resend' : 'Send via Gmail'}</button>
           </div>
         </div>

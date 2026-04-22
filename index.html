@@ -42,382 +42,202 @@
       z-index: 100;
     }
 
-    .logo {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
+    .logo { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
     .logo span { color: var(--accent); }
-
     .header-actions { display: flex; gap: 12px; align-items: center; }
 
     .gmail-status {
-      font-size: 13px;
-      color: var(--text-dim);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 13px; color: var(--text-dim);
+      display: flex; align-items: center; gap: 6px;
     }
-
-    .gmail-status .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--red);
-    }
-
+    .gmail-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
     .gmail-status.connected .dot { background: var(--green); }
 
     /* ── Buttons ─────────────────────────────── */
     .btn {
-      padding: 8px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); font-size: 13px;
+      font-weight: 500; cursor: pointer; transition: all 0.15s;
     }
-
     .btn:hover { background: var(--surface2); border-color: var(--text-dim); }
-
-    .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
     .btn-primary:hover { background: var(--accent-hover); }
-
     .btn-sm { padding: 5px 10px; font-size: 12px; }
-
-    .btn-send {
-      background: var(--green);
-      border-color: var(--green);
-      color: #000;
-      font-weight: 600;
-    }
-
+    .btn-send { background: var(--green); border-color: var(--green); color: #000; font-weight: 600; }
     .btn-send:hover { opacity: 0.9; }
-
-    .btn-send:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
+    .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-danger { background: transparent; border-color: var(--red); color: var(--red); }
+    .btn-danger:hover { background: rgba(239,68,68,0.1); }
+    .btn-responded { background: var(--green); border-color: var(--green); color: #000; }
+    .btn-no-response { background: var(--yellow); border-color: var(--yellow); color: #000; }
 
     /* ── Stats bar ───────────────────────────── */
     .stats {
-      display: flex;
-      gap: 24px;
-      padding: 16px 32px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
+      display: flex; gap: 24px; padding: 16px 32px;
+      border-bottom: 1px solid var(--border); background: var(--surface);
+    }
+    .stat { display: flex; flex-direction: column; gap: 2px; }
+    .stat-value { font-size: 22px; font-weight: 700; }
+    .stat-label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── Filter tabs ─────────────────────────── */
+    .filter-bar {
+      display: flex; gap: 2px; padding: 10px 32px;
+      border-bottom: 1px solid var(--border); background: var(--bg);
     }
 
-    .stat {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+    .filter-tab {
+      padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      border: 1px solid transparent; background: transparent; color: var(--text-dim);
+      cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px;
     }
+    .filter-tab:hover { color: var(--text); background: var(--surface); }
+    .filter-tab.active { background: var(--accent); color: #fff; }
 
-    .stat-value {
-      font-size: 22px;
-      font-weight: 700;
+    .filter-count {
+      font-size: 10px; background: rgba(255,255,255,0.15); padding: 1px 6px;
+      border-radius: 8px; font-weight: 600;
     }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    .filter-tab.active .filter-count { background: rgba(255,255,255,0.25); }
 
     /* ── Main layout ─────────────────────────── */
     .container {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      height: calc(100vh - 110px);
+      display: grid; grid-template-columns: 400px 1fr;
+      height: calc(100vh - 155px);
     }
 
     /* ── Prospect list (left) ────────────────── */
-    .prospect-list {
-      border-right: 1px solid var(--border);
-      overflow-y: auto;
-    }
+    .prospect-list { border-right: 1px solid var(--border); overflow-y: auto; }
 
     .prospect-item {
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: background 0.1s;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 14px 20px; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.1s;
+      display: flex; align-items: center; gap: 12px;
     }
-
     .prospect-item:hover { background: var(--surface); }
     .prospect-item.active { background: var(--surface2); border-left: 3px solid var(--accent); }
+    .prospect-item.dismissed { opacity: 0.45; }
 
     .prospect-item .checkbox {
-      width: 18px;
-      height: 18px;
-      border-radius: 4px;
-      border: 2px solid var(--border);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.15s;
+      width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--border);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.15s;
     }
-
-    .prospect-item .checkbox.checked {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
+    .prospect-item .checkbox.checked { background: var(--accent); border-color: var(--accent); }
     .prospect-item .checkbox.checked::after {
-      content: '';
-      width: 5px;
-      height: 9px;
-      border: solid #fff;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
-      margin-bottom: 2px;
+      content: ''; width: 5px; height: 9px; border: solid #fff;
+      border-width: 0 2px 2px 0; transform: rotate(45deg); margin-bottom: 2px;
     }
 
     .prospect-info { flex: 1; min-width: 0; }
-
     .prospect-name {
-      font-weight: 600;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 600; font-size: 14px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
     }
-
     .prospect-meta {
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 12px; color: var(--text-dim); margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    .stage-badge {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      flex-shrink: 0;
+    .status-badge {
+      font-size: 10px; padding: 2px 8px; border-radius: 10px;
+      font-weight: 600; text-transform: uppercase; flex-shrink: 0;
     }
-
-    .stage-seed { background: #1e3a5f; color: #60a5fa; }
-    .stage-bootstrapped { background: #1a3a1a; color: #4ade80; }
-    .stage-pre-seed { background: #3b2a1a; color: #fbbf24; }
-    .stage-series-a { background: #2d1a3a; color: #c084fc; }
-    .stage-unknown { background: var(--surface2); color: var(--text-dim); }
-
-    .sent-badge {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 600;
-      background: #1a3a1a;
-      color: #4ade80;
-      flex-shrink: 0;
-    }
+    .status-new { background: #1e3a5f; color: #60a5fa; }
+    .status-sent { background: #1a3a1a; color: #4ade80; }
+    .status-responded { background: #064e3b; color: #34d399; }
+    .status-no_response { background: #422006; color: #fbbf24; }
+    .status-dismissed { background: var(--surface2); color: var(--text-dim); }
 
     /* ── Detail panel (right) ────────────────── */
-    .detail-panel {
-      overflow-y: auto;
-      padding: 28px 32px;
-    }
+    .detail-panel { overflow-y: auto; padding: 28px 32px; }
 
     .empty-state {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      color: var(--text-dim);
-      font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      height: 100%; color: var(--text-dim); font-size: 15px;
     }
 
     .detail-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      display: flex; justify-content: space-between; align-items: flex-start;
       margin-bottom: 24px;
     }
+    .detail-name { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+    .detail-headline { font-size: 14px; color: var(--text-dim); margin-top: 4px; }
+    .detail-company { font-size: 15px; color: var(--accent); margin-top: 4px; }
 
-    .detail-name {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+    .detail-status-bar {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 20px;
+      padding: 12px 16px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px;
     }
-
-    .detail-headline {
-      font-size: 14px;
-      color: var(--text-dim);
-      margin-top: 4px;
+    .detail-status-bar .status-label {
+      font-size: 12px; color: var(--text-dim); text-transform: uppercase;
+      letter-spacing: 0.5px; margin-right: 4px;
     }
-
-    .detail-company {
-      font-size: 15px;
-      color: var(--accent);
-      margin-top: 4px;
-    }
+    .detail-status-bar .status-actions { display: flex; gap: 6px; margin-left: auto; }
 
     .detail-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px;
     }
-
     .detail-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px;
     }
-
     .detail-card-label {
-      font-size: 11px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      font-size: 11px; color: var(--text-dim); text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 6px;
     }
-
-    .detail-card-value {
-      font-size: 13px;
-      line-height: 1.5;
-    }
+    .detail-card-value { font-size: 13px; line-height: 1.5; }
 
     /* ── Message section ─────────────────────── */
-    .message-section {
-      margin-top: 8px;
-    }
-
+    .message-section { margin-top: 8px; }
     .message-section h3 {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 15px; font-weight: 600; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
     }
 
-    .tone-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 14px;
-    }
-
+    .tone-tabs { display: flex; gap: 4px; margin-bottom: 14px; }
     .tone-tab {
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 500;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      border: 1px solid var(--border); background: transparent; color: var(--text-dim);
+      cursor: pointer; transition: all 0.15s;
     }
-
     .tone-tab:hover { color: var(--text); }
     .tone-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
     .message-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; margin-bottom: 14px;
     }
-
     .message-box textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.6;
-      resize: vertical;
-      min-height: 140px;
-      font-family: inherit;
-      outline: none;
+      width: 100%; background: transparent; border: none; color: var(--text);
+      font-size: 14px; line-height: 1.6; resize: vertical; min-height: 140px;
+      font-family: inherit; outline: none;
     }
 
     .message-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 8px;
+      display: flex; align-items: center; justify-content: space-between; margin-top: 8px;
     }
-
-    .char-count {
-      font-size: 12px;
-      color: var(--text-dim);
-    }
-
+    .char-count { font-size: 12px; color: var(--text-dim); }
     .char-count.warn { color: var(--yellow); }
     .char-count.over { color: var(--red); }
-
-    .message-actions {
-      display: flex;
-      gap: 8px;
-    }
+    .message-actions { display: flex; gap: 8px; }
 
     /* ── Email input ─────────────────────────── */
-    .email-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-      align-items: center;
-    }
-
-    .email-row label {
-      font-size: 13px;
-      color: var(--text-dim);
-      white-space: nowrap;
-    }
-
+    .email-row { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; }
+    .email-row label { font-size: 13px; color: var(--text-dim); white-space: nowrap; }
     .email-row input {
-      flex: 1;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-size: 13px;
-      outline: none;
+      flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); font-size: 13px; outline: none;
     }
-
     .email-row input:focus { border-color: var(--accent); }
 
     /* ── Toast ────────────────────────────────── */
     .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      z-index: 200;
-      transform: translateY(80px);
-      opacity: 0;
-      transition: all 0.3s;
+      position: fixed; bottom: 24px; right: 24px; padding: 12px 20px;
+      border-radius: 10px; font-size: 13px; font-weight: 500; z-index: 200;
+      transform: translateY(80px); opacity: 0; transition: all 0.3s;
     }
-
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { background: #166534; color: #bbf7d0; }
     .toast.error { background: #7f1d1d; color: #fecaca; }
@@ -425,79 +245,40 @@
 
     /* ── Bulk bar ─────────────────────────────── */
     .bulk-bar {
-      display: none;
-      padding: 12px 32px;
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
+      display: none; padding: 12px 32px; background: var(--surface2);
+      border-bottom: 1px solid var(--border); align-items: center; gap: 12px; font-size: 13px;
     }
-
     .bulk-bar.show { display: flex; }
 
     /* ── Add prospect modal ──────────────────── */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 300;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      z-index: 300; align-items: center; justify-content: center;
     }
-
     .modal-overlay.show { display: flex; }
 
     .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-      width: 480px;
-      max-height: 80vh;
-      overflow-y: auto;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px; width: 480px;
+      max-height: 80vh; overflow-y: auto;
     }
-
-    .modal h2 {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .modal .field {
-      margin-bottom: 14px;
-    }
-
+    .modal h2 { font-size: 18px; margin-bottom: 20px; }
+    .modal .field { margin-bottom: 14px; }
     .modal label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-dim);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+      display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 4px;
+      text-transform: uppercase; letter-spacing: 0.3px;
     }
-
     .modal input, .modal textarea {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 13px;
-      font-family: inherit;
-      outline: none;
+      width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); font-size: 13px; font-family: inherit; outline: none;
     }
-
     .modal input:focus, .modal textarea:focus { border-color: var(--accent); }
-
     .modal textarea { min-height: 60px; resize: vertical; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
 
-    .modal-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-      margin-top: 20px;
+    /* ── Empty list ───────────────────────────── */
+    .list-empty {
+      padding: 40px 20px; text-align: center; color: var(--text-dim); font-size: 13px;
     }
 
     /* ── Scrollbar ────────────────────────────── */
@@ -508,7 +289,6 @@
 </head>
 <body>
 
-<!-- Header -->
 <header>
   <div class="logo"><span>globalize.now</span> — Review Swap Outreach</div>
   <div class="header-actions">
@@ -521,80 +301,43 @@
   </div>
 </header>
 
-<!-- Stats -->
 <div class="stats">
-  <div class="stat">
-    <div class="stat-value" id="statTotal">0</div>
-    <div class="stat-label">Prospects</div>
-  </div>
-  <div class="stat">
-    <div class="stat-value" id="statSent">0</div>
-    <div class="stat-label">Sent</div>
-  </div>
-  <div class="stat">
-    <div class="stat-value" id="statPending">0</div>
-    <div class="stat-label">Pending</div>
-  </div>
-  <div class="stat">
-    <div class="stat-value" id="statTarget">100</div>
-    <div class="stat-label">Target</div>
-  </div>
+  <div class="stat"><div class="stat-value" id="statTotal">0</div><div class="stat-label">Total</div></div>
+  <div class="stat"><div class="stat-value" id="statNew">0</div><div class="stat-label">New Leads</div></div>
+  <div class="stat"><div class="stat-value" id="statSent">0</div><div class="stat-label">Sent</div></div>
+  <div class="stat"><div class="stat-value" id="statResponded">0</div><div class="stat-label">Responded</div></div>
+  <div class="stat"><div class="stat-value" id="statNoResponse">0</div><div class="stat-label">No Response</div></div>
+  <div class="stat"><div class="stat-value" id="statDismissed">0</div><div class="stat-label">Dismissed</div></div>
+  <div class="stat"><div class="stat-value" id="statTarget">100</div><div class="stat-label">Target</div></div>
 </div>
 
-<!-- Bulk action bar -->
+<div class="filter-bar" id="filterBar"></div>
+
 <div class="bulk-bar" id="bulkBar">
   <span><strong id="bulkCount">0</strong> selected</span>
   <button class="btn btn-sm btn-send" onclick="bulkSend()">Send All Selected</button>
+  <button class="btn btn-sm btn-danger" onclick="bulkDismiss()">Dismiss Selected</button>
   <button class="btn btn-sm" onclick="clearSelection()">Clear</button>
 </div>
 
-<!-- Main -->
 <div class="container">
-  <!-- Left: prospect list -->
   <div class="prospect-list" id="prospectList"></div>
-
-  <!-- Right: detail + message -->
   <div class="detail-panel" id="detailPanel">
     <div class="empty-state">Select a prospect to view details and compose a message</div>
   </div>
 </div>
 
-<!-- Add Prospect Modal -->
 <div class="modal-overlay" id="addModal">
   <div class="modal">
     <h2>Add Prospect</h2>
-    <div class="field">
-      <label>Name *</label>
-      <input type="text" id="addName" placeholder="Jane Smith">
-    </div>
-    <div class="field">
-      <label>Company *</label>
-      <input type="text" id="addCompany" placeholder="Acme Inc">
-    </div>
-    <div class="field">
-      <label>Title / Headline</label>
-      <input type="text" id="addHeadline" placeholder="CEO & Co-Founder">
-    </div>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="addEmail" placeholder="jane@acme.com">
-    </div>
-    <div class="field">
-      <label>LinkedIn URL</label>
-      <input type="url" id="addLinkedin" placeholder="https://linkedin.com/in/janesmith">
-    </div>
-    <div class="field">
-      <label>Product Description</label>
-      <textarea id="addProduct" placeholder="What does their product do?"></textarea>
-    </div>
-    <div class="field">
-      <label>Stage</label>
-      <input type="text" id="addStage" placeholder="seed / bootstrapped / pre-seed / series-a">
-    </div>
-    <div class="field">
-      <label>Personalization Hooks</label>
-      <textarea id="addHooks" placeholder="Shared interests, recent posts, mutual connections..."></textarea>
-    </div>
+    <div class="field"><label>Name *</label><input type="text" id="addName" placeholder="Jane Smith"></div>
+    <div class="field"><label>Company *</label><input type="text" id="addCompany" placeholder="Acme Inc"></div>
+    <div class="field"><label>Title / Headline</label><input type="text" id="addHeadline" placeholder="CEO & Co-Founder"></div>
+    <div class="field"><label>Email</label><input type="email" id="addEmail" placeholder="jane@acme.com"></div>
+    <div class="field"><label>LinkedIn URL</label><input type="url" id="addLinkedin" placeholder="https://linkedin.com/in/janesmith"></div>
+    <div class="field"><label>Product Description</label><textarea id="addProduct" placeholder="What does their product do?"></textarea></div>
+    <div class="field"><label>Stage</label><input type="text" id="addStage" placeholder="seed / bootstrapped / pre-seed / series-a"></div>
+    <div class="field"><label>Personalization Hooks</label><textarea id="addHooks" placeholder="Shared interests, recent posts, mutual connections..."></textarea></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeAddModal()">Cancel</button>
       <button class="btn btn-primary" onclick="addProspect()">Add Prospect</button>
@@ -602,7 +345,6 @@
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -611,34 +353,72 @@
   let selected = new Set();
   let activeId = null;
   let activeTone = 'casual';
+  let activeFilter = 'all';
   let gmailReady = false;
   let tokenClient = null;
   let accessToken = null;
 
-  // Gmail API config - user fills in their own client ID
   const GMAIL_CLIENT_ID = localStorage.getItem('gmail_client_id') || '';
   const GMAIL_SCOPES = 'https://www.googleapis.com/auth/gmail.send';
+
+  // Status: 'new' | 'sent' | 'responded' | 'no_response' | 'dismissed'
+  function getStatus(p) { return p._status || 'new'; }
+  function setStatus(p, s) { p._status = s; saveProspects(); }
+
+  // ── Filters ────────────────────────────────
+  const filters = [
+    { key: 'all', label: 'All' },
+    { key: 'new', label: 'New Leads' },
+    { key: 'sent', label: 'Email Sent' },
+    { key: 'responded', label: 'Responded' },
+    { key: 'no_response', label: 'Not Responded' },
+    { key: 'dismissed', label: 'Dismissed' },
+  ];
+
+  function getFiltered() {
+    if (activeFilter === 'all') return prospects.filter(p => getStatus(p) !== 'dismissed');
+    return prospects.filter(p => getStatus(p) === activeFilter);
+  }
+
+  function renderFilters() {
+    const counts = {};
+    filters.forEach(f => counts[f.key] = 0);
+    prospects.forEach(p => { const s = getStatus(p); if (counts[s] !== undefined) counts[s]++; });
+    counts.all = prospects.filter(p => getStatus(p) !== 'dismissed').length;
+
+    document.getElementById('filterBar').innerHTML = filters.map(f => `
+      <button class="filter-tab ${activeFilter === f.key ? 'active' : ''}" onclick="setFilter('${f.key}')">
+        ${f.label}<span class="filter-count">${counts[f.key]}</span>
+      </button>
+    `).join('');
+  }
+
+  function setFilter(f) {
+    activeFilter = f;
+    renderFilters();
+    renderList();
+  }
 
   // ── Message templates ──────────────────────
   const templates = {
     casual: [
-      (p) => `Hey ${p._first}, love what you're building with ${p.company}. I'm Liam, fellow founder working on globalize.now (AI localization for dev teams). Would you be open to a review swap? Happy to dive deep into ${p.company} first and give honest feedback — then you could take a look at ours when convenient. ${p._hook}`,
-      (p) => `Hey ${p._first}! Fellow SaaS founder here — been following ${p.company} and really like what you're doing. I'm building globalize.now (AI-powered localization for dev teams). I've been doing review swaps with other early-stage founders and it's been incredibly valuable. Would you be up for it? I'd review ${p.company} first, no strings attached. ${p._hook}`,
-      (p) => `Hey ${p._first}, came across ${p.company} and it caught my eye. I'm Liam — building globalize.now, an AI localization tool for dev teams. I'm doing founder review swaps this month — basically trading honest product feedback with other builders. Interested? Happy to go first and dig into ${p.company}. ${p._hook}`,
+      (p) => `Hey ${p._first}, love what you're building with ${p.company}. I'm Liam, fellow founder working on globalize.now (AI localization for dev teams). Would you be open to a review swap? Happy to dive deep into ${p.company} first and give honest feedback \u2014 then you could take a look at ours when convenient. ${p._hook}`,
+      (p) => `Hey ${p._first}! Fellow SaaS founder here \u2014 been following ${p.company} and really like what you're doing. I'm building globalize.now (AI-powered localization for dev teams). I've been doing review swaps with other early-stage founders and it's been incredibly valuable. Would you be up for it? I'd review ${p.company} first, no strings attached. ${p._hook}`,
+      (p) => `Hey ${p._first}, came across ${p.company} and it caught my eye. I'm Liam \u2014 building globalize.now, an AI localization tool for dev teams. I'm doing founder review swaps this month \u2014 basically trading honest product feedback with other builders. Interested? Happy to go first and dig into ${p.company}. ${p._hook}`,
     ],
     formal: [
-      (p) => `Hi ${p.name}, I came across ${p.company} and was impressed by what you're building. I'm Liam James, founder of globalize.now — we're building AI-powered localization for developer teams. I'm reaching out to fellow founders about product review swaps: I'd love to provide detailed feedback on ${p.company}, and in return get your perspective on globalize.now. ${p._hook} Would you be open to this?`,
-      (p) => `Hi ${p.name}, as a fellow SaaS founder, I know how valuable honest product feedback is — especially from people who understand the journey. I'm Liam, building globalize.now (AI localization for dev teams). I'd love to propose a review swap: I'll invest time in thoroughly reviewing ${p.company} and sharing actionable feedback, and I'd appreciate your perspective on our product in return. ${p._hook}`,
+      (p) => `Hi ${p.name}, I came across ${p.company} and was impressed by what you're building. I'm Liam James, founder of globalize.now \u2014 we're building AI-powered localization for developer teams. I'm reaching out to fellow founders about product review swaps: I'd love to provide detailed feedback on ${p.company}, and in return get your perspective on globalize.now. ${p._hook} Would you be open to this?`,
+      (p) => `Hi ${p.name}, as a fellow SaaS founder, I know how valuable honest product feedback is \u2014 especially from people who understand the journey. I'm Liam, building globalize.now (AI localization for dev teams). I'd love to propose a review swap: I'll invest time in thoroughly reviewing ${p.company} and sharing actionable feedback, and I'd appreciate your perspective on our product in return. ${p._hook}`,
     ],
     short: [
-      (p) => `Hey ${p._first}! Fellow founder here (globalize.now — AI localization for devs). Would you be up for a product review swap? I'll review ${p.company} first. ${p._hook}`,
-      (p) => `Hi ${p._first}, Liam here — building globalize.now. Doing review swaps with other SaaS founders this month. Happy to review ${p.company} first if you're interested? ${p._hook}`,
+      (p) => `Hey ${p._first}! Fellow founder here (globalize.now \u2014 AI localization for devs). Would you be up for a product review swap? I'll review ${p.company} first. ${p._hook}`,
+      (p) => `Hi ${p._first}, Liam here \u2014 building globalize.now. Doing review swaps with other SaaS founders this month. Happy to review ${p.company} first if you're interested? ${p._hook}`,
     ],
   };
 
   function buildHook(p) {
     if (p.personalization_hooks) return p.personalization_hooks;
-    if (p.recent_posts) return `Saw your recent post about ${p.recent_posts.split(';')[0].trim()} — really resonated.`;
+    if (p.recent_posts) return `Saw your recent post about ${p.recent_posts.split(';')[0].trim()} \u2014 really resonated.`;
     if (p.growth_signals) return `Congrats on ${p.growth_signals.split(',')[0].trim()}, by the way!`;
     const s = (p.stage || '').toLowerCase();
     if (['pre-seed', 'seed', 'bootstrapped'].includes(s)) return 'Always great to connect with founders in the early grind.';
@@ -646,20 +426,13 @@
   }
 
   function generateMessage(prospect, tone) {
-    const p = {
-      ...prospect,
-      _first: (prospect.name || 'there').split(' ')[0],
-      _hook: buildHook(prospect),
-    };
+    const p = { ...prospect, _first: (prospect.name || 'there').split(' ')[0], _hook: buildHook(prospect) };
     const tpls = templates[tone] || templates.casual;
-    // Use prospect id as seed for consistent selection
-    const idx = (prospect.id || 0) % tpls.length;
-    return tpls[idx](p);
+    return tpls[(prospect.id || 0) % tpls.length](p);
   }
 
   // ── Load data ──────────────────────────────
   async function loadProspects() {
-    // Try loading from localStorage first (includes manually added), fall back to JSON file
     const stored = localStorage.getItem('prospects');
     if (stored) {
       prospects = JSON.parse(stored);
@@ -668,44 +441,48 @@
         const resp = await fetch('prospects.json');
         prospects = await resp.json();
         saveProspects();
-      } catch (e) {
-        prospects = [];
-      }
+      } catch (e) { prospects = []; }
     }
+    renderFilters();
     renderList();
     updateStats();
   }
 
-  function saveProspects() {
-    localStorage.setItem('prospects', JSON.stringify(prospects));
-  }
+  function saveProspects() { localStorage.setItem('prospects', JSON.stringify(prospects)); }
 
   // ── Render prospect list ───────────────────
   function renderList() {
     const list = document.getElementById('prospectList');
-    list.innerHTML = prospects.map(p => {
+    const filtered = getFiltered();
+
+    if (filtered.length === 0) {
+      list.innerHTML = `<div class="list-empty">No prospects in this view</div>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(p => {
       const isActive = p.id === activeId;
       const isSelected = selected.has(p.id);
-      const stageClass = `stage-${(p.stage || 'unknown').replace(/[\s_]/g, '-')}`;
+      const status = getStatus(p);
+      const isDismissed = status === 'dismissed';
+
+      const statusLabels = { new: 'NEW', sent: 'SENT', responded: 'RESPONDED', no_response: 'NO REPLY', dismissed: 'DISMISSED' };
+
       return `
-        <div class="prospect-item ${isActive ? 'active' : ''}" onclick="selectProspect(${p.id})">
+        <div class="prospect-item ${isActive ? 'active' : ''} ${isDismissed ? 'dismissed' : ''}" onclick="selectProspect(${p.id})">
           <div class="checkbox ${isSelected ? 'checked' : ''}" onclick="event.stopPropagation(); toggleSelect(${p.id})"></div>
           <div class="prospect-info">
             <div class="prospect-name">${esc(p.name)}</div>
             <div class="prospect-meta">${esc(p.headline || p.company)}</div>
           </div>
-          ${p._sent ? '<span class="sent-badge">SENT</span>' : `<span class="stage-badge ${stageClass}">${esc(p.stage || '?')}</span>`}
+          <span class="status-badge status-${status}">${statusLabels[status]}</span>
         </div>
       `;
     }).join('');
   }
 
   // ── Select / detail ────────────────────────
-  function selectProspect(id) {
-    activeId = id;
-    renderList();
-    renderDetail();
-  }
+  function selectProspect(id) { activeId = id; renderList(); renderDetail(); }
 
   function renderDetail() {
     const panel = document.getElementById('detailPanel');
@@ -715,18 +492,45 @@
       return;
     }
 
+    const status = getStatus(p);
     const msg = p._draft || generateMessage(p, activeTone);
+
+    const statusColors = { new: 'var(--blue)', sent: 'var(--green)', responded: '#34d399', no_response: 'var(--yellow)', dismissed: 'var(--text-dim)' };
+    const statusLabels = { new: 'New Lead', sent: 'Email Sent', responded: 'Responded', no_response: 'Not Responded', dismissed: 'Dismissed' };
+    const sentDate = p._sentDate ? ` on ${new Date(p._sentDate).toLocaleDateString()}` : '';
 
     panel.innerHTML = `
       <div class="detail-header">
         <div>
           <div class="detail-name">${esc(p.name)}</div>
-          <div class="detail-company">${esc(p.company)}${p.funding ? ` — ${esc(p.funding)}` : ''}</div>
+          <div class="detail-company">${esc(p.company)}${p.funding ? ` \u2014 ${esc(p.funding)}` : ''}</div>
           <div class="detail-headline">${esc(p.headline || '')}</div>
         </div>
         <div style="display:flex;gap:8px">
           ${p.linkedin_url ? `<a href="${esc(p.linkedin_url)}" target="_blank" class="btn btn-sm">LinkedIn</a>` : ''}
           ${p.website ? `<a href="${esc(p.website)}" target="_blank" class="btn btn-sm">Website</a>` : ''}
+        </div>
+      </div>
+
+      <div class="detail-status-bar">
+        <span class="status-label">Status:</span>
+        <span class="status-badge status-${status}">${statusLabels[status]}${sentDate}</span>
+        <div class="status-actions">
+          ${status === 'sent' ? `
+            <button class="btn btn-sm btn-responded" onclick="markResponded()">Mark Responded</button>
+            <button class="btn btn-sm btn-no-response" onclick="markNoResponse()">No Response</button>
+          ` : ''}
+          ${status === 'no_response' ? `
+            <button class="btn btn-sm btn-responded" onclick="markResponded()">Mark Responded</button>
+          ` : ''}
+          ${status === 'responded' ? `
+            <button class="btn btn-sm" onclick="markStatus('sent')">Undo</button>
+          ` : ''}
+          ${status !== 'dismissed' ? `
+            <button class="btn btn-sm btn-danger" onclick="dismissProspect()">Dismiss</button>
+          ` : `
+            <button class="btn btn-sm" onclick="restoreProspect()">Restore</button>
+          `}
         </div>
       </div>
 
@@ -737,42 +541,87 @@
         ${p.personalization_hooks ? `<div class="detail-card"><div class="detail-card-label">Hooks</div><div class="detail-card-value">${esc(p.personalization_hooks)}</div></div>` : ''}
       </div>
 
+      ${status !== 'dismissed' ? `
       <div class="message-section">
         <h3>Outreach Message</h3>
-
         <div class="tone-tabs">
           ${['casual', 'formal', 'short'].map(t => `
             <button class="tone-tab ${activeTone === t ? 'active' : ''}" onclick="switchTone('${t}')">${t}</button>
           `).join('')}
           <button class="btn btn-sm" onclick="regenerate()" style="margin-left:auto">Regenerate</button>
         </div>
-
         <div class="email-row">
           <label>To:</label>
           <input type="email" id="emailTo" value="${esc(p.email || p._email || '')}" placeholder="their@email.com" oninput="saveEmail(this.value)">
         </div>
-
         <div class="message-box">
           <textarea id="messageText" oninput="onMessageEdit()">${esc(msg)}</textarea>
         </div>
-
         <div class="message-footer">
           <span class="char-count" id="charCount"></span>
           <div class="message-actions">
             <button class="btn btn-sm" onclick="copyMessage()">Copy</button>
-            <button class="btn btn-sm btn-send" onclick="sendOne()" id="sendBtn">Send via Gmail</button>
+            <button class="btn btn-sm btn-send" onclick="sendOne()" id="sendBtn">${status === 'sent' ? 'Resend' : 'Send via Gmail'}</button>
           </div>
         </div>
       </div>
+      ` : ''}
     `;
 
     updateCharCount();
   }
 
+  // ── Status actions ─────────────────────────
+  function markStatus(status) {
+    const p = prospects.find(x => x.id === activeId);
+    if (!p) return;
+    setStatus(p, status);
+    renderFilters(); renderList(); renderDetail(); updateStats();
+  }
+
+  function markResponded() {
+    markStatus('responded');
+    toast('Marked as responded', 'success');
+  }
+
+  function markNoResponse() {
+    markStatus('no_response');
+    toast('Marked as no response', 'info');
+  }
+
+  function dismissProspect() {
+    const p = prospects.find(x => x.id === activeId);
+    if (!p) return;
+    setStatus(p, 'dismissed');
+    renderFilters(); renderList(); renderDetail(); updateStats();
+    toast(`${p.name} dismissed`, 'info');
+  }
+
+  function restoreProspect() {
+    const p = prospects.find(x => x.id === activeId);
+    if (!p) return;
+    // Restore to previous logical status
+    if (p._sentDate) { setStatus(p, 'sent'); }
+    else { setStatus(p, 'new'); }
+    renderFilters(); renderList(); renderDetail(); updateStats();
+    toast(`${p.name} restored`, 'success');
+  }
+
+  function bulkDismiss() {
+    const toDismiss = prospects.filter(p => selected.has(p.id));
+    if (toDismiss.length === 0) return;
+    if (!confirm(`Dismiss ${toDismiss.length} prospect(s)?`)) return;
+    toDismiss.forEach(p => setStatus(p, 'dismissed'));
+    clearSelection();
+    renderFilters(); renderList(); updateStats();
+    toast(`Dismissed ${toDismiss.length} prospects`, 'info');
+  }
+
+  // ── Tone / message editing ─────────────────
   function switchTone(tone) {
     activeTone = tone;
     const p = prospects.find(x => x.id === activeId);
-    if (p) p._draft = null;  // Reset draft when switching tone
+    if (p) p._draft = null;
     renderDetail();
   }
 
@@ -780,29 +629,20 @@
     const p = prospects.find(x => x.id === activeId);
     if (!p) return;
     const tpls = templates[activeTone] || templates.casual;
-    // Pick a random different template
     const prepared = { ...p, _first: (p.name || 'there').split(' ')[0], _hook: buildHook(p) };
-    const idx = Math.floor(Math.random() * tpls.length);
-    p._draft = tpls[idx](prepared);
-    saveProspects();
-    renderDetail();
+    p._draft = tpls[Math.floor(Math.random() * tpls.length)](prepared);
+    saveProspects(); renderDetail();
   }
 
   function onMessageEdit() {
     const p = prospects.find(x => x.id === activeId);
-    if (p) {
-      p._draft = document.getElementById('messageText').value;
-      saveProspects();
-    }
+    if (p) { p._draft = document.getElementById('messageText').value; saveProspects(); }
     updateCharCount();
   }
 
   function saveEmail(val) {
     const p = prospects.find(x => x.id === activeId);
-    if (p) {
-      p._email = val;
-      saveProspects();
-    }
+    if (p) { p._email = val; saveProspects(); }
   }
 
   function updateCharCount() {
@@ -823,17 +663,11 @@
 
   // ── Selection / bulk ───────────────────────
   function toggleSelect(id) {
-    if (selected.has(id)) selected.delete(id);
-    else selected.add(id);
+    if (selected.has(id)) selected.delete(id); else selected.add(id);
     renderList();
     const bar = document.getElementById('bulkBar');
-    const count = document.getElementById('bulkCount');
-    if (selected.size > 0) {
-      bar.classList.add('show');
-      count.textContent = selected.size;
-    } else {
-      bar.classList.remove('show');
-    }
+    if (selected.size > 0) { bar.classList.add('show'); document.getElementById('bulkCount').textContent = selected.size; }
+    else { bar.classList.remove('show'); }
   }
 
   function clearSelection() {
@@ -847,27 +681,21 @@
     const clientId = GMAIL_CLIENT_ID || prompt('Enter your Google OAuth Client ID:\n\n(Create one at console.cloud.google.com > APIs > Credentials > OAuth 2.0 Client ID for Web App.\nAdd this page URL as an authorized JavaScript origin.)');
     if (!clientId) return;
     localStorage.setItem('gmail_client_id', clientId);
-
-    // Load Google Identity Services
     if (!document.getElementById('gsi-script')) {
       const script = document.createElement('script');
       script.id = 'gsi-script';
       script.src = 'https://accounts.google.com/gsi/client';
       script.onload = () => initGmail(clientId);
       document.head.appendChild(script);
-    } else {
-      initGmail(clientId);
-    }
+    } else { initGmail(clientId); }
   }
 
   function initGmail(clientId) {
     tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: clientId,
-      scope: GMAIL_SCOPES,
+      client_id: clientId, scope: GMAIL_SCOPES,
       callback: (response) => {
         if (response.access_token) {
-          accessToken = response.access_token;
-          gmailReady = true;
+          accessToken = response.access_token; gmailReady = true;
           const status = document.getElementById('gmailStatus');
           status.className = 'gmail-status connected';
           status.querySelector('span').textContent = 'Gmail connected';
@@ -881,105 +709,52 @@
 
   async function sendEmail(to, subject, body) {
     if (!accessToken) throw new Error('Gmail not connected');
-
-    const email = [
-      `To: ${to}`,
-      `Subject: ${subject}`,
-      'Content-Type: text/plain; charset=utf-8',
-      '',
-      body,
-    ].join('\r\n');
-
-    const encoded = btoa(unescape(encodeURIComponent(email)))
-      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-
+    const email = [`To: ${to}`, `Subject: ${subject}`, 'Content-Type: text/plain; charset=utf-8', '', body].join('\r\n');
+    const encoded = btoa(unescape(encodeURIComponent(email))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     const resp = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ raw: encoded }),
     });
-
-    if (!resp.ok) {
-      const err = await resp.json();
-      throw new Error(err.error?.message || 'Failed to send');
-    }
+    if (!resp.ok) { const err = await resp.json(); throw new Error(err.error?.message || 'Failed to send'); }
     return resp.json();
   }
 
   async function sendOne() {
     const p = prospects.find(x => x.id === activeId);
     if (!p) return;
-
     const email = document.getElementById('emailTo')?.value;
     const message = document.getElementById('messageText')?.value;
-
-    if (!email) {
-      toast('Enter an email address first', 'error');
-      return;
-    }
-
-    if (!gmailReady) {
-      toast('Connect Gmail first', 'error');
-      return;
-    }
+    if (!email) { toast('Enter an email address first', 'error'); return; }
+    if (!gmailReady) { toast('Connect Gmail first', 'error'); return; }
 
     const btn = document.getElementById('sendBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-
+    btn.disabled = true; btn.textContent = 'Sending...';
     try {
-      const subject = `Fellow founder — review swap for ${p.company} x globalize.now?`;
-      await sendEmail(email, subject, message);
-      p._sent = true;
-      p._sentDate = new Date().toISOString();
-      saveProspects();
-      renderList();
-      renderDetail();
-      updateStats();
+      await sendEmail(email, `Fellow founder \u2014 review swap for ${p.company} x globalize.now?`, message);
+      p._sent = true; p._sentDate = new Date().toISOString();
+      setStatus(p, 'sent');
+      renderFilters(); renderList(); renderDetail(); updateStats();
       toast(`Sent to ${p.name}!`, 'success');
     } catch (err) {
       toast(`Send failed: ${err.message}`, 'error');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Send via Gmail';
-    }
+    } finally { btn.disabled = false; btn.textContent = 'Send via Gmail'; }
   }
 
   async function bulkSend() {
-    if (!gmailReady) {
-      toast('Connect Gmail first', 'error');
-      return;
-    }
-
-    const toSend = prospects.filter(p => selected.has(p.id) && (p.email || p._email) && !p._sent);
-    if (toSend.length === 0) {
-      toast('No selected prospects have email addresses', 'error');
-      return;
-    }
-
+    if (!gmailReady) { toast('Connect Gmail first', 'error'); return; }
+    const toSend = prospects.filter(p => selected.has(p.id) && (p.email || p._email) && getStatus(p) !== 'dismissed');
+    if (toSend.length === 0) { toast('No selected prospects have email addresses', 'error'); return; }
     if (!confirm(`Send emails to ${toSend.length} prospect(s)?`)) return;
-
     let sent = 0;
     for (const p of toSend) {
       try {
         const msg = p._draft || generateMessage(p, activeTone);
-        const subject = `Fellow founder — review swap for ${p.company} x globalize.now?`;
-        await sendEmail(p.email || p._email, subject, msg);
-        p._sent = true;
-        p._sentDate = new Date().toISOString();
-        sent++;
-      } catch (err) {
-        console.error(`Failed to send to ${p.name}:`, err);
-      }
+        await sendEmail(p.email || p._email, `Fellow founder \u2014 review swap for ${p.company} x globalize.now?`, msg);
+        p._sent = true; p._sentDate = new Date().toISOString(); setStatus(p, 'sent'); sent++;
+      } catch (err) { console.error(`Failed to send to ${p.name}:`, err); }
     }
-
-    saveProspects();
-    clearSelection();
-    renderList();
-    updateStats();
+    saveProspects(); clearSelection(); renderFilters(); renderList(); updateStats();
     toast(`Sent ${sent} of ${toSend.length} emails`, sent > 0 ? 'success' : 'error');
   }
 
@@ -990,67 +765,51 @@
   function addProspect() {
     const name = document.getElementById('addName').value.trim();
     const company = document.getElementById('addCompany').value.trim();
-    if (!name || !company) {
-      toast('Name and company are required', 'error');
-      return;
-    }
-
+    if (!name || !company) { toast('Name and company are required', 'error'); return; }
     const maxId = prospects.reduce((m, p) => Math.max(m, p.id || 0), 0);
     const p = {
-      id: maxId + 1,
-      name,
-      company,
+      id: maxId + 1, name, company,
       headline: document.getElementById('addHeadline').value.trim(),
       email: document.getElementById('addEmail').value.trim(),
       linkedin_url: document.getElementById('addLinkedin').value.trim(),
       product_description: document.getElementById('addProduct').value.trim(),
       stage: document.getElementById('addStage').value.trim(),
       personalization_hooks: document.getElementById('addHooks').value.trim(),
+      _status: 'new',
     };
-
-    // Clean empty fields
     Object.keys(p).forEach(k => { if (!p[k] && k !== 'id') delete p[k]; });
-
     prospects.push(p);
-    saveProspects();
-    renderList();
-    updateStats();
-    closeAddModal();
+    saveProspects(); renderFilters(); renderList(); updateStats(); closeAddModal();
     toast(`Added ${name}`, 'success');
-
-    // Clear form
     ['addName','addCompany','addHeadline','addEmail','addLinkedin','addProduct','addStage','addHooks']
       .forEach(id => document.getElementById(id).value = '');
   }
 
   // ── Stats ──────────────────────────────────
   function updateStats() {
+    const counts = { new: 0, sent: 0, responded: 0, no_response: 0, dismissed: 0 };
+    prospects.forEach(p => { const s = getStatus(p); if (counts[s] !== undefined) counts[s]++; });
     document.getElementById('statTotal').textContent = prospects.length;
-    document.getElementById('statSent').textContent = prospects.filter(p => p._sent).length;
-    document.getElementById('statPending').textContent = prospects.filter(p => !p._sent).length;
+    document.getElementById('statNew').textContent = counts.new;
+    document.getElementById('statSent').textContent = counts.sent;
+    document.getElementById('statResponded').textContent = counts.responded;
+    document.getElementById('statNoResponse').textContent = counts.no_response;
+    document.getElementById('statDismissed').textContent = counts.dismissed;
   }
 
   // ── Helpers ────────────────────────────────
-  function esc(str) {
-    if (!str) return '';
-    const d = document.createElement('div');
-    d.textContent = str;
-    return d.innerHTML;
-  }
+  function esc(str) { if (!str) return ''; const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
 
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.className = `toast ${type} show`;
+    el.textContent = msg; el.className = `toast ${type} show`;
     setTimeout(() => el.classList.remove('show'), 3000);
   }
 
-  // Click outside modal to close
   document.getElementById('addModal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeAddModal();
   });
 
-  // ── Init ───────────────────────────────────
   loadProspects();
 </script>
 

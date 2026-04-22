@@ -70,6 +70,8 @@
     .btn-danger:hover { background: rgba(239,68,68,0.1); }
     .btn-responded { background: var(--green); border-color: var(--green); color: #000; }
     .btn-no-response { background: var(--yellow); border-color: var(--yellow); color: #000; }
+    .btn-linkedin { background: #0a66c2; border-color: #0a66c2; color: #fff; }
+    .btn-linkedin:hover { background: #004182; }
 
     /* ── Stats bar ───────────────────────────── */
     .stats {
@@ -597,6 +599,7 @@
           <span class="char-count" id="charCount"></span>
           <div class="message-actions">
             <button class="btn btn-sm" onclick="copyMessage()">Copy</button>
+            ${p.linkedin_url ? `<button class="btn btn-sm btn-linkedin" onclick="openLinkedIn()">LinkedIn Connect + Copy</button>` : ''}
             <button class="btn btn-sm btn-send" onclick="sendOne()" id="sendBtn">${status === 'sent' ? 'Resend' : 'Send via Gmail'}</button>
           </div>
         </div>
@@ -697,6 +700,17 @@
     toast('Message copied to clipboard', 'success');
   }
 
+  function openLinkedIn() {
+    const p = prospects.find(x => x.id === activeId);
+    if (!p || !p.linkedin_url) return;
+    const ta = document.getElementById('messageText');
+    if (ta) {
+      navigator.clipboard.writeText(ta.value);
+      toast('Message copied! Paste it in the LinkedIn connection note or DM.', 'success');
+    }
+    window.open(p.linkedin_url, '_blank');
+  }
+
   // ── Selection / bulk ───────────────────────
   function toggleSelect(id) {
     if (selected.has(id)) selected.delete(id); else selected.add(id);
@@ -729,23 +743,24 @@
   function initGmail(clientId) {
     tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: clientId, scope: GMAIL_SCOPES,
+      hint: 'sales@globalize.now',
       callback: (response) => {
         if (response.access_token) {
           accessToken = response.access_token; gmailReady = true;
           const status = document.getElementById('gmailStatus');
           status.className = 'gmail-status connected';
-          status.querySelector('span').textContent = 'Gmail connected';
+          status.querySelector('span').textContent = 'Gmail connected (sales@globalize.now)';
           document.getElementById('gmailBtn').textContent = 'Reconnect';
-          toast('Gmail connected successfully', 'success');
+          toast('Gmail connected as sales@globalize.now', 'success');
         }
       },
     });
-    tokenClient.requestAccessToken();
+    tokenClient.requestAccessToken({ hint: 'sales@globalize.now' });
   }
 
   async function sendEmail(to, subject, body) {
     if (!accessToken) throw new Error('Gmail not connected');
-    const email = [`To: ${to}`, `Subject: ${subject}`, 'Content-Type: text/plain; charset=utf-8', '', body].join('\r\n');
+    const email = [`From: Liam James <sales@globalize.now>`, `To: ${to}`, `Subject: ${subject}`, 'Content-Type: text/plain; charset=utf-8', '', body].join('\r\n');
     const encoded = btoa(unescape(encodeURIComponent(email))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
     const resp = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
       method: 'POST',

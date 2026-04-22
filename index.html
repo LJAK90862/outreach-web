@@ -676,7 +676,9 @@
         <div class="email-row">
           <label>To:</label>
           <input type="email" id="emailTo" value="${esc(p.email || p._email || '')}" placeholder="their@email.com" oninput="saveEmail(this.value)">
+          <button class="btn btn-sm" onclick="findEmail()" id="findEmailBtn">${(p.email || p._email) ? 'Re-find' : 'Find Email'}</button>
         </div>
+        <div id="emailSuggestions" style="display:none;margin:-8px 0 14px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px"></div>
         <div class="message-box">
           <textarea id="messageText" oninput="onMessageEdit()">${esc(msg)}</textarea>
         </div>
@@ -823,6 +825,134 @@
     selected.clear();
     document.getElementById('bulkBar').classList.remove('show');
     renderList();
+  }
+
+  // ── Email enrichment ────────────────────────
+
+  function getDomain(prospect) {
+    // Try website first
+    if (prospect.website) {
+      try {
+        const url = new URL(prospect.website.startsWith('http') ? prospect.website : 'https://' + prospect.website);
+        return url.hostname.replace('www.', '');
+      } catch(e) {}
+    }
+    // Try to guess from company name
+    const company = (prospect.company || '').split(/[\s\/\(\)]/)[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (company) return company + '.com';
+    return null;
+  }
+
+  function guessEmails(prospect) {
+    const domain = getDomain(prospect);
+    if (!domain) return [];
+    const name = (prospect.name || '').trim();
+    if (!name) return [];
+
+    const parts = name.toLowerCase().split(/\s+/);
+    const first = parts[0] || '';
+    const last = parts[parts.length - 1] || '';
+    const firstInitial = first[0] || '';
+
+    const patterns = [
+      `${first}@${domain}`,
+      `${first}.${last}@${domain}`,
+      `${firstInitial}${last}@${domain}`,
+      `${first}${last}@${domain}`,
+      `${first}_${last}@${domain}`,
+      `${last}@${domain}`,
+    ];
+
+    // Remove duplicates
+    return [...new Set(patterns)].filter(e => e.includes('@') && !e.startsWith('@'));
+  }
+
+  async function hunterLookup(prospect) {
+    const apiKey = localStorage.getItem('hunter_api_key');
+    if (!apiKey) return null;
+
+    const domain = getDomain(prospect);
+    const name = (prospect.name || '').trim();
+    if (!domain || !name) return null;
+
+    const parts = name.split(/\s+/);
+    const first = parts[0];
+    const last = parts.length > 1 ? parts[parts.length - 1] : '';
+
+    try {
+      const url = `https://api.hunter.io/v2/email-finder?domain=${encodeURIComponent(domain)}&first_name=${encodeURIComponent(first)}&last_name=${encodeURIComponent(last)}&api_key=${apiKey}`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+
+      if (data.data && data.data.email) {
+        return {
+          email: data.data.email,
+          score: data.data.score || 0,
+          source: 'hunter.io',
+        };
+      }
+    } catch(e) {
+      console.error('Hunter lookup failed:', e);
+    }
+    return null;
+  }
+
+  async function findEmail() {
+    const p = prospects.find(x => x.id === activeId);
+    if (!p) return;
+
+    const btn = document.getElementById('findEmailBtn');
+    const sugBox = document.getElementById('emailSuggestions');
+    btn.textContent = 'Searching...';
+    btn.disabled = true;
+
+    // Try Hunter.io first
+    const hunterResult = await hunterLookup(p);
+    const guesses = guessEmails(p);
+
+    let html = '';
+
+    if (hunterResult) {
+      html += `<div style="margin-bottom:6px"><strong style="color:var(--green)">Hunter.io found:</strong> ` +
+        `<a href="#" onclick="event.preventDefault();useEmail('${hunterResult.email}')" style="color:var(--accent);text-decoration:underline">${hunterResult.email}</a>` +
+        ` <span style="color:var(--text-dim)">(${hunterResult.score}% confidence)</span></div>`;
+    } else if (localStorage.getItem('hunter_api_key')) {
+      html += `<div style="margin-bottom:6px;color:var(--text-dim)">Hunter.io: no result found</div>`;
+    } else {
+      html += `<div style="margin-bottom:6px;color:var(--text-dim)">Hunter.io: <a href="#" onclick="event.preventDefault();setupHunter()" style="color:var(--accent);text-decoration:underline">add API key</a> for verified lookups (25 free/month)</div>`;
+    }
+
+    if (guesses.length > 0) {
+      html += `<div style="margin-bottom:4px"><strong>Pattern guesses</strong> <span style="color:var(--text-dim)">(${getDomain(p)})</span>:</div>`;
+      html += guesses.map(e =>
+        `<a href="#" onclick="event.preventDefault();useEmail('${e}')" style="color:var(--accent);text-decoration:underline;margin-right:10px">${e}</a>`
+      ).join(' ');
+    } else {
+      html += `<div style="color:var(--text-dim)">Could not guess domain. Add a website to the prospect first.</div>`;
+    }
+
+    sugBox.innerHTML = html;
+    sugBox.style.display = 'block';
+
+    btn.textContent = 'Find Email';
+    btn.disabled = false;
+  }
+
+  function useEmail(email) {
+    const input = document.getElementById('emailTo');
+    if (input) input.value = email;
+    saveEmail(email);
+    document.getElementById('emailSuggestions').style.display = 'none';
+    toast(`Email set to ${email}`, 'success');
+  }
+
+  function setupHunter() {
+    const key = prompt('Enter your Hunter.io API key:\n\nGet one free at hunter.io/api (25 lookups/month on free plan)');
+    if (key) {
+      localStorage.setItem('hunter_api_key', key);
+      toast('Hunter.io API key saved', 'success');
+      findEmail(); // Retry with the key
+    }
   }
 
   // ── Gmail integration ──────────────────────
